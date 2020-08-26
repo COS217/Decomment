@@ -1,0 +1,94 @@
+#!/bin/bash
+
+#---------------------------------------------------------------------
+# testdecommentdiff
+# Author: Bob Dondero
+#---------------------------------------------------------------------
+
+#---------------------------------------------------------------------
+# testdecommentdiff is a testing script for the decomment program.
+# To run it, type "testdecommentdiff", followed by the name of
+# an input file.
+#
+# The script runs the decomment program and the given
+# sampledecomment program on the specified file, and makes sure
+# that the two programs return the same values and write the same
+# characters to stdout and stderr.
+#---------------------------------------------------------------------
+
+# Validate the arguments.
+if [ "$#" != "1" ]; then
+   echo "Usage: testdecommentdiff file"
+   exit 1
+fi
+
+if [ ! -e "$1" ]; then
+   echo "File $1 does not exist."
+   exit 1
+fi
+
+# Capture the argument.
+file=$1
+
+echo "==============================================================="
+echo "Test with input file" $file
+echo "==============================================================="
+
+# Run sampledecomment on the input file, and capture its return value.
+./sampledecomment < $file > __stdout1 2> __stderr1
+ret1=$?
+
+# Run decomment on the input file, and capture its return value.
+./decomment < $file > __stdout2 2> __stderr2
+ret2=$?
+
+# Check the exit status.
+if [ $ret1 != $ret2 ]; then
+   echo
+   echo "***** Exit status is incorrect."
+   echo
+   echo "********** This is the correct exit status:"
+   echo $ret1
+   echo
+   echo "********** Your program had this exit status:"
+   echo $ret2
+   echo
+fi
+
+# Check the stdout streams.
+diff -c __stdout1 __stdout2 > __diffout
+if [ $? != "0" ]; then
+   echo
+   echo "***** stdout is incorrect."
+   echo
+   echo "********** This is stdin:"
+   cat $file
+   echo 
+   echo "********** This is the correct stdout:" 
+   cat __stdout1
+   echo
+   echo "********** This is your program's stdout:"
+   cat __stdout2
+   echo
+fi
+
+# Check the stderr streams.
+diff -c __stderr1 __stderr2 > __differr
+if [ $? != "0" ]; then
+   echo
+   echo "***** stderr is incorrect."
+   echo
+   echo "********** This is stdin:"
+   cat $file
+   echo
+   echo "********** This is the correct stderr:" 
+   cat __stderr1
+   echo 
+   echo "********** This is your program's stderr:"
+   cat __stderr2
+   echo
+fi
+
+# Clean up.
+echo
+rm __stdout1 __stdout2 __stderr1 __stderr2 __diffout __differr

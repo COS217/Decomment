@@ -1,0 +1,34 @@
+#!/bin/bash
+
+#---------------------------------------------------------------------
+# testdecomment
+# Author: Bob Dondero
+#---------------------------------------------------------------------
+
+#---------------------------------------------------------------------
+# testdecomment is a testing script for the decomment program.
+# To run it, type "testdecomment".
+
+# To use it, the working directory must contain:
+# (1) decomment, the executable version of your program, and
+# (2) sampledecomment, the given executable binary file.
+
+# The script executes decomment and sampledecomment on each file
+# in the working directory that ends with ".txt", and compares the
+# results.
+#---------------------------------------------------------------------
+
+# Validate the argument.
+if [ "$#" -gt "0" ]; then
+   echo "Usage: testdecomment"
+   exit 1
+fi
+
+echo
+
+# Call testdecommentdiff for each file in the working directory
+# that ends with ".txt", passing along the argument.
+for file in *.txt
+do
+   ./testdecommentdiff $file
+done
