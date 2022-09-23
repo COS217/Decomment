@@ -7,8 +7,8 @@
 
 #---------------------------------------------------------------------
 # testdecommentdiff is a testing script for the decomment program.
-# To run it, type "testdecommentdiff", followed by the name of
-# an input file.
+# To run it, issue the command "./testdecommentdiff somefile ",
+# where somefile is the name of an input file.
 #
 # The script runs the decomment program and the given
 # sampledecomment program on the specified file, and makes sure
@@ -63,8 +63,8 @@ if [ $? != "0" ]; then
    echo
    echo "********** This is stdin:"
    cat $file
-   echo 
-   echo "********** This is the correct stdout:" 
+   echo
+   echo "********** This is the correct stdout:"
    cat __stdout1
    echo
    echo "********** This is your program's stdout:"
@@ -81,9 +81,9 @@ if [ $? != "0" ]; then
    echo "********** This is stdin:"
    cat $file
    echo
-   echo "********** This is the correct stderr:" 
+   echo "********** This is the correct stderr:"
    cat __stderr1
-   echo 
+   echo
    echo "********** This is your program's stderr:"
    cat __stderr2
    echo

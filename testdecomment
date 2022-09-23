@@ -7,7 +7,7 @@
 
 #---------------------------------------------------------------------
 # testdecomment is a testing script for the decomment program.
-# To run it, type "testdecomment".
+# To run it, issue the command "./testdecomment".
 
 # To use it, the working directory must contain:
 # (1) decomment, the executable version of your program, and
